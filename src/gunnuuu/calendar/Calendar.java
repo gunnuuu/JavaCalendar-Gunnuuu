@@ -19,23 +19,20 @@ public class Calendar {
 			return MAXDAYS[month-1];
 		}
 	}
-	/**
-	 * -월을 입력하면 그 달의 달력을 출력
-	 * -모양은 그대로
-	 * --1입력 전까지 반복입력
-	 * -프롬프트 출력
-	 */
 	
-	public void printCalendar(int year,int month) {
+	public void printCalendar(int year,int month,int weekday) {
 		System.out.printf("    <<%4d년%3d월>>\n",year,month);
 		System.out.println(" SU MO TU WE TH FR SA");
 		System.out.println(" --------------------");
 		
+		for(int i = 0;i < weekday;i++) {
+			System.out.print("   ");
+		}
 		int maxDay = getmaxDays(year,month);
-		
-		for(int i=1;i<= maxDay;i++) {
+			
+		for(int i = 1;i<= maxDay;i++) {
 			System.out.printf("%3d",i);
-			if(i%7==0) {
+			if((i+weekday)%7==0) {
 				System.out.println();
 			}
 		}
