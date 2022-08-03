@@ -1,12 +1,33 @@
 package gunnuuu.calendar;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 public class Calendar {
 	
 	private static final int[] MAXDAYS = {0,31,28,31,30,31,30,31,31,30,31,30,31};
 	private static final int[] LEAPYEAR = {0,31,29,31,30,31,30,31,31,30,31,30,31};
 	
+	private HashMap<Date,String> planMap;
+	
+	public Calendar() {
+		planMap = new HashMap<Date,String>();
+	}	
+	
+	public void registerPlan(String strDate, String plan) throws ParseException {
+		Date date = new SimpleDateFormat("yyyy-mm-dd").parse(strDate);
+		planMap.put(date,plan);
+	}
+
+	public String searchPlan(String strDate) throws ParseException {
+		Date date = new SimpleDateFormat("yyyy-mm-dd").parse(strDate);
+		String plan = planMap.get(date);
+		return plan;
+	}
+	
 	public boolean isLeapYear(int year) {
-		if(year%4==0 && (year % 100 != 0 || year % 400 == 0))
+		if(year%4==0 && (year % 100 != 0 || year % 400 == 0)) 
 			return true;
 		else
 			return false;
@@ -57,7 +78,7 @@ public class Calendar {
 	
 	private int getWeekDay(int year, int month, int day) {
 		int syear = 1970;
-		final int STANDARD_WEEKDAY = 3; //1970/jan/1=thursday
+		final int STANDARD_WEEKDAY = 4; //1970/jan/1=thursday
 		
 		int count = 0;
 		
@@ -71,7 +92,7 @@ public class Calendar {
 			count+=delta;
 		}
 		
-		count += day;
+		count += day-1;
 		
 		int weekday = (count + STANDARD_WEEKDAY) & 7; 
 		return weekday;
